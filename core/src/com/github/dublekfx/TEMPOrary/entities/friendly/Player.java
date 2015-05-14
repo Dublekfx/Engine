@@ -270,6 +270,7 @@ private void updateState() {
 						break;
 					}
 					else if(velocity.y == 0) {
+						//
 						if(this.down) {
 							Gdx.app.debug("[Collision]", "Platform Dropping");
 							this.isFalling = true;
