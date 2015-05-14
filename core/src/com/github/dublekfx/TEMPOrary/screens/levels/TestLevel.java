@@ -34,7 +34,7 @@ public class TestLevel implements Screen {
 	
 	private boolean debugCooldown = false;
 	
-	public static final float GRAVITY = .3f;
+	public static final float GRAVITY = .25f;
 
 	public TestLevel(final TEMPOrary game) {
 		instance = this;

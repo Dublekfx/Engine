@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
+import com.github.dublekfx.TEMPOrary.TEMPOrary;
 import com.github.dublekfx.TEMPOrary.entities.Entity;
 import com.github.dublekfx.TEMPOrary.screens.levels.TestLevel;
 
@@ -35,6 +36,10 @@ public class Player extends Entity {
 	protected float jumpVel;
 	protected float stopJumpVel;
 	
+	//DoubleJump
+	protected boolean canDoubleJump = false;
+	protected boolean doubleJumpReady;
+	protected boolean upReleasedInAir;
 
 	public Player(Texture texture, Screen level) {
 		super(texture, level);
@@ -190,12 +195,23 @@ private void updateState() {
 		}
 		//Vertical Translation
 		Gdx.app.debug("[Collision]", "Begin Y Velocity Check");
+		if(velocity.y == 0) {
+			upReleasedInAir = false;
+			doubleJumpReady = true;
+		}
 		if(isJumping && !isFalling) {
 			velocity.y = this.jumpVel;
 			isFalling = true;
 			isGrounded = false;
 		}
 		if(isFalling) {
+			if(canDoubleJump) {
+				if(!TEMPOrary.INPUT.isKeyPressed("SPACE")) upReleasedInAir = true;
+				if(TEMPOrary.INPUT.isKeyPressed("SPACE") && upReleasedInAir && doubleJumpReady) {
+					velocity.y = this.jumpVel;
+					doubleJumpReady = false;
+				}
+			}
 			isGrounded = false;
 			if(velocity.y < 0) {
 				isJumping = false;

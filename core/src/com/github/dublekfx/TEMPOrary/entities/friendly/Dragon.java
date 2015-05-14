@@ -23,6 +23,8 @@ public class Dragon extends Player {
 		jumpVel = 6;
 		stopJumpVel = 1;
 		
+		canDoubleJump = true;
+		
 		TextureRegion[][] region = TextureRegion.split(texture, spriteWidth, spriteHeight);
 
 		TextureRegion[] idleRegion = new TextureRegion[2];
