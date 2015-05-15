@@ -21,6 +21,7 @@ public class Dragon extends Player {
 		moveSpeed = 3;
 		maxMoveSpeed = 3;
 		jumpVel = 6;
+		doubleJumpVel = 4;
 		stopJumpVel = 1;
 		
 		canDoubleJump = true;
@@ -39,6 +40,7 @@ public class Dragon extends Player {
 		idling = new Animation(0.25f, idleRegion);
 		walking = new Animation(0.05f, walkingRegion);
 		jumping = new Animation(.1f, jumpingRegion);
+		doubleJumping = new Animation (.05f, jumpingRegion);
 
 		this.hitBox = new Rectangle(this.getX() + hitBoxOffsetX, this.getY() + hitBoxOffsetY, hitBoxWidth, hitBoxHeight);
 		

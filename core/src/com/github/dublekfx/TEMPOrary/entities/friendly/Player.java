@@ -28,12 +28,14 @@ public class Player extends Entity {
 	protected Animation idling;
 	protected Animation walking;
 	protected Animation jumping;
+	protected Animation doubleJumping;
 	protected float stateTime;
 	protected boolean left, right, up, down, isJumping, isGrounded, isFalling;
 	
 	protected float moveSpeed;
 	protected float maxMoveSpeed;
 	protected float jumpVel;
+	protected float doubleJumpVel;
 	protected float stopJumpVel;
 	
 	//DoubleJump
@@ -195,7 +197,7 @@ private void updateState() {
 		}
 		//Vertical Translation
 		Gdx.app.debug("[Collision]", "Begin Y Velocity Check");
-		if(velocity.y == 0) {
+		if(isGrounded) {
 			upReleasedInAir = false;
 			doubleJumpReady = true;
 		}
@@ -208,7 +210,7 @@ private void updateState() {
 			if(canDoubleJump) {
 				if(!TEMPOrary.INPUT.isKeyPressed("SPACE")) upReleasedInAir = true;
 				if(TEMPOrary.INPUT.isKeyPressed("SPACE") && upReleasedInAir && doubleJumpReady) {
-					velocity.y = this.jumpVel;
+					velocity.y = this.doubleJumpVel;
 					doubleJumpReady = false;
 				}
 			}
