@@ -32,12 +32,13 @@ public class Player extends Entity {
 	protected float stateTime;
 	protected boolean left, right, up, down, isJumping, isGrounded, isFalling;
 	
-	protected float moveSpeed;
-	protected float maxMoveSpeed;
-	protected float jumpVel;
-	protected float doubleJumpVel;
-	protected float stopJumpVel;
+	protected double moveSpeed;
+	protected double maxMoveSpeed;
+	protected double jumpVel;
+	protected double doubleJumpVel;
+	protected double stopJumpVel;
 	
+	protected boolean jumpReady;
 	//DoubleJump
 	protected boolean canDoubleJump = false;
 	protected boolean doubleJumpReady;
@@ -200,11 +201,13 @@ private void updateState() {
 		if(isGrounded) {
 			upReleasedInAir = false;
 			doubleJumpReady = true;
+			if(!TEMPOrary.INPUT.isKeyPressed("SPACE")) jumpReady = true;
 		}
-		if(isJumping && !isFalling) {
+		if(isJumping && !isFalling && jumpReady) {
 			velocity.y = this.jumpVel;
 			isFalling = true;
 			isGrounded = false;
+			jumpReady = false;
 		}
 		if(isFalling) {
 			if(canDoubleJump) {

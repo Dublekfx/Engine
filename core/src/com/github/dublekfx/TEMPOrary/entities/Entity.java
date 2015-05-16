@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.github.dublekfx.TEMPOrary.utilities.Options;
+import data_structures.Vector2D;
 
 public class Entity extends Actor {
 
@@ -21,7 +22,7 @@ public class Entity extends Actor {
 	
 	protected Rectangle hitBox;
 
-	protected Vector2 velocity;
+	protected Vector2D velocity;
 	
 	protected int health;
 	
@@ -32,7 +33,7 @@ public class Entity extends Actor {
 		this.texture = texture;
 		this.level = level;
 		hitBox = new Rectangle();
-		velocity = new Vector2();
+		velocity = new Vector2D();
 		this.facingRight = true;
 		this.onGround = true;
 	}
@@ -45,11 +46,11 @@ public class Entity extends Actor {
 		this.hitBox = hitBox;
 	}
 
-	public Vector2 getVelocity() {
+	public Vector2D getVelocity() {
 		return velocity;
 	}
 
-	public void setVelocity(Vector2 velocity) {
+	public void setVelocity(Vector2D velocity) {
 		this.velocity = velocity;
 	}
 

@@ -20,11 +20,12 @@ public class Dragon extends Player {
 		
 		moveSpeed = 3;
 		maxMoveSpeed = 3;
-		jumpVel = 6;
-		doubleJumpVel = 4;
-		stopJumpVel = 1;
+		jumpVel = 5.75;
+		doubleJumpVel = 4.5;
+		stopJumpVel = .4;
 		
 		canDoubleJump = true;
+		jumpReady = true;
 		
 		TextureRegion[][] region = TextureRegion.split(texture, spriteWidth, spriteHeight);
 
