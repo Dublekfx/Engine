@@ -19,6 +19,7 @@ public class Dragon extends Player {
 		hitBoxOffsetY = 0;
 		
 		moveSpeed = 3;
+		slowSpeed = 0.225;
 		realMaxMoveSpeed = 3;
 		maxMoveSpeed = realMaxMoveSpeed;
 		jumpVel = 5.75;

@@ -33,6 +33,7 @@ public class Player extends Entity {
 	protected boolean left, right, up, down, isJumping, isGrounded, isFalling;
 	
 	protected double moveSpeed;
+	protected double slowSpeed;
 	protected double realMaxMoveSpeed;
 	protected double maxMoveSpeed = realMaxMoveSpeed;
 	protected double jumpVel;
@@ -176,7 +177,18 @@ private void updateState() {
 			if(velocity.x > maxMoveSpeed) velocity.x = maxMoveSpeed;
 		}
 		if(!left && !right) {
-			velocity.x = 0;
+			if (velocity.x > 0) {
+				velocity.x -= slowSpeed;
+				if (velocity.x < 0) {
+					velocity.x = 0;
+				}
+			}
+			else if (velocity.x < 0) {
+				velocity.x += slowSpeed;
+				if (velocity.x > 0) {
+					velocity.x = 0;
+				}
+			} 
 		}
 		Gdx.app.debug("[Collision]", "X Velocity: " + velocity.x);
 		if (velocity.x > 0) {
@@ -200,19 +212,27 @@ private void updateState() {
 		}
 		//Vertical Translation
 		Gdx.app.debug("[Collision]", "Begin Y Velocity Check");
+		
+		// landing state
 		if(isGrounded) {
 			upReleasedInAir = false;
 			doubleJumpReady = true;
 			maxMoveSpeed = realMaxMoveSpeed;
 			if(!TEMPOrary.INPUT.isKeyPressed("SPACE")) jumpReady = true;
 		}
+		
+		// initial jump-off
 		if(isJumping && !isFalling && jumpReady) {
 			velocity.y = this.jumpVel;
 			isFalling = true;
 			isGrounded = false;
 			jumpReady = false;
 		}
+		
+		// airborne state and double-jump
 		if(isFalling) {
+			jumpReady = false;
+			isGrounded = false;
 			if(canDoubleJump) {
 				if(!TEMPOrary.INPUT.isKeyPressed("SPACE")) upReleasedInAir = true;
 				if(TEMPOrary.INPUT.isKeyPressed("SPACE") && upReleasedInAir && doubleJumpReady) {
@@ -223,7 +243,6 @@ private void updateState() {
 					doubleJumpReady = false;
 				}
 			}
-			isGrounded = false;
 			if(velocity.y < 0) {
 				isJumping = false;
 			}
@@ -231,12 +250,16 @@ private void updateState() {
 				velocity.y -= stopJumpVel;
 			}
 		}
+		
+		// apply gravity
 		if(!isGrounded) {
 			velocity.y -= TestLevel.GRAVITY;
 		}
 		else {
 			isFalling = false;
 		}
+		
+		
 		Gdx.app.debug("[Collision]", "Y Velocity: " + velocity.y);
 		if (velocity.y > 0) {
 			startY = endY = (int)(this.getHitBox().getY() + this.getHitBox().getHeight() + velocity.y) / (int)layer.getTileHeight();
